@@ -1,0 +1,50 @@
+@use "../abstracts/variables";
+
+@font-face {
+  font-family: "MonaSans";
+  src: url("/assets/fonts/Mona_Sans/MonaSans-VariableFont_wdth_wght.ttf") format("TrueType");
+}
+
+@font-face {
+  font-family: "InterTight";
+  src: url("/assets/fonts/Inter_Tight/InterTight-VariableFont_wght.ttf") format("TrueType");
+}
+
+* {
+  color: var(--primary-100);
+}
+
+p {
+  font-family: "MonaSans", sans-serif;
+  font-size: 1rem;
+  line-height: 1.4em;
+  letter-spacing: 1%;
+}
+
+h1 {
+  font-family: "InterTight", sans-serif;
+  font-size: 2rem;
+  line-height: 1.4em;
+  letter-spacing: 1%;
+}
+
+h2 {
+  font-family: "InterTight", sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.4em;
+  letter-spacing: 1%;
+}
+
+h3 {
+  font-family: "InterTight", sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.4em;
+  letter-spacing: 1%;
+}
+
+h4 {
+  font-family: "InterTight", sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.4em;
+  letter-spacing: 1%;
+}

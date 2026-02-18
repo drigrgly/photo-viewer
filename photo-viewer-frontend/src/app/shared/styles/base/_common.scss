@@ -1,0 +1,79 @@
+html {
+  background-color: var(--panel-100);
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+
+  background-size: cover;
+
+  &--list {
+    background-size: cover;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+// Form related stuff
+.form {
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+
+  padding:1em;
+
+  border-radius: var(--panel-radius);
+  border: 3px solid var(--secondary-80);
+  background-color: var(--secondary-50);
+  box-shadow: 0.1rem 0.1rem 0.4rem var(--secondary-80);
+
+
+  .header__title {
+    text-align: center;
+  }
+
+}
+
+.input-label-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  flex: 1;
+  font-family: InterTight, sans-serif;
+  padding: 0.4em;
+
+  border: 1px solid var(--secondary-80);
+  border-radius: var(--input-radius);
+
+  outline: none;
+  font-size:1rem;
+
+  &:focus {
+    border: 2px solid var(--secondary-80);
+
+  }
+}
+
+.input-label {
+  display: flex;
+  font-family: InterTight, sans-serif;
+}
+
+//
+.tag {
+  padding: 0.3rem 1rem;
+  border: 2px solid var(--secondary-50);
+  border-radius: var(--panel-radius);
+}
+
+.panel {
+  border-radius: var(--panel-radius);
+  padding: var(--panel-padding);
+
+  border:2px solid var(--primary-20);
+
+  background-color: var(--panel-100);
+}

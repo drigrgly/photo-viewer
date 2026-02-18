@@ -1,0 +1,112 @@
+.material-icons-outlined {
+  color: inherit;
+}
+
+.btn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.3rem;
+
+  user-select: none;
+  cursor: pointer;
+
+  border:none;
+
+  padding: 0.5em 1em;
+  border-radius: var(--button-radius);
+  font-weight: bold;
+  letter-spacing: 5%;
+
+  color: var(--accent-80);
+  fill: var(--accent-80);
+  background-color: var(--accent-50);
+
+  &:disabled, &:invalid,  {
+    color: var(--disabled-80);
+    cursor: initial;
+
+    &:not(.btn--simple) {
+      background-color: var(--disabled-50);
+    }
+  }
+
+
+  &:hover:not(.btn--simple):not(:disabled) {
+    color: var(--accent-90);
+    fill: var(--accent-90);
+    background-color: var(--accent-60);
+  }
+
+  &:active:not(.btn--simple):not(:disabled) {
+    color: var(--accent-100);
+    background-color: var(--accent-70);
+
+  }
+}
+
+.btn--simple {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+
+  color: var(--secondary-80);
+
+  &:hover:not(:disabled)  {
+    text-decoration: 2px underline;
+  }
+}
+
+.btn--secondary {
+  color: var(--secondary-80);
+
+  &:not(.btn--simple) {
+    background-color: var(--secondary-50);
+  }
+
+  &:hover:not(.btn--simple):not(:disabled) {
+    color: var(--secondary-90);
+    background-color: var(--secondary-60);
+  }
+
+  &:active:not(.btn--simple):not(:disabled) {
+    color: var(--secondary-100);
+    background-color: var(--secondary-70);
+  }
+}
+
+.btn--success {
+  color: var(--success-80);
+
+  &:not(.btn--simple) {
+    background-color: var(--success-50);
+  }
+
+  &:hover:not(.btn--simple):not(:disabled) {
+    color: var(--success-90);
+    background-color: var(--success-60);
+  }
+
+  &:active:not(.btn--simple):not(:disabled) {
+    color: var(--success-100);
+    background-color: var(--success-70);
+  }
+}
+
+.btn--danger {
+  color: var(--danger-80);
+
+  &:not(.btn--simple) {
+    background-color: var(--danger-50);
+  }
+
+  &:hover:not(.btn--simple):not(:disabled) {
+    color: var(--danger-90);
+    background-color: var(--danger-60);
+  }
+
+  &:active:not(.btn--simple):not(:disabled) {
+    color: var(--danger-100);
+    background-color: var(--danger-70);
+  }
+}

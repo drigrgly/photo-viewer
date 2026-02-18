@@ -1,0 +1,112 @@
+@use "sass:map";
+
+// Establish the default colors used in the application
+// Create a css variable from each of the lists for ease of use in further styling
+$primaryColor: (
+  'primary-100': #000000,
+  'primary-80': #838383,
+  'primary-40': #5C5C5C,
+  'primary-20': #D0D0D0,
+  'primary-10': #EDEDED
+);
+
+$secondaryColor: (
+  'secondary-100': #0051ff,
+  'secondary-90': #1a6dcc,
+  'secondary-80': #4483E0,
+  'secondary-70': #71b1ea,
+  'secondary-60': #c0d5f4,
+  'secondary-50': #E1ECF6,
+  'secondary-10': #f2f2f9
+);
+
+$accentColor: (
+  'accent-100': #7300FF,
+  'accent-90': #8429F2,
+  'accent-80': #8A44E0,
+  'accent-70': #C078FF,
+  'accent-60': #E7CBFF,
+  'accent-50': #ECE1F6,
+  'accent-10': #ebe5f4
+);
+
+$successColor: (
+  'success-100': #00911c,
+  'success-90': #02aa17,
+  'success-80': #0ba61f,
+  'success-70': #86e493,
+  'success-60': #9beca1,
+  'success-50': #b8f4c2,
+  'success-10': #d5fdd9
+);
+
+$warningColor: (
+);
+
+$dangerColor: (
+  'danger-100': #FF0004,
+  'danger-90': #d54d4f,
+  'danger-80': #ED5659,
+  'danger-70': #faa4a5,
+  'danger-60': #FFB9BA,
+  'danger-50': #FFD9DA
+);
+
+$disabledColor: (
+  'disabled-80': #838383,
+  'disabled-50': #E3E3E3
+);
+
+
+$backgroundColor: (
+  'background-100': #f5f3ff,
+  'background-90': #aaaaaa
+);
+
+$panelColor: (
+  'panel-100': #ffffff
+);
+
+// Create the variables
+
+// Helper so we don't have to iterate over each
+// one by one
+$colorVariableHelper: (
+  primary: $primaryColor,
+  accent: $accentColor,
+  background: $backgroundColor,
+  secondary: $secondaryColor,
+  warning: $warningColor,
+  danger: $dangerColor,
+  success: $successColor,
+  disabled: $disabledColor,
+  panel: $panelColor
+);
+
+:root{
+    @each $colorListKey, $colorList in $colorVariableHelper {
+      @each $key, $value in $colorList {
+          --#{$key} : #{$value};
+
+          //.bg-#{$key} {
+          //  background-color: $value;
+          //}
+          //
+          //.fg-#{$key} {
+          //  background-color: $value;
+          //}
+      }
+    }
+
+  //Layout variables
+  --panel-radius: 0.4rem;
+  --panel-gap: 0.5rem;
+  --panel-padding: 1rem;
+
+  --button-radius: 0.4rem;
+  --select-radius: 0.2rem;
+  --input-radius: 0.4rem;
+
+
+  --default-gap: 1rem;
+}

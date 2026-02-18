@@ -1,1 +1,9 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files and node_modules
+src/environments/environment.ts
+.env
 node_modules
+
