@@ -1,1 +1,40 @@
-<p>login works!</p>
+<form class="form" [formGroup]="loginForm">
+  <h1 class="form-title">Login</h1>
+  <!-- Username -->
+  <form-error-display
+    [formElement]="this.loginForm.controls.username"
+    [handledErrors]="{
+      required: 'This field is required',
+    }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="username">Username:</label>
+      <input
+        class="input-field"
+        id="username"
+        type="text"
+        formControlName="username"
+        placeholder="myUser"
+      >
+    </div>
+  </form-error-display>
+
+  <!-- Password -->
+  <form-error-display
+    [formElement]="this.loginForm.controls.password"
+    [handledErrors]="{
+      required: 'This field is required',
+    }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="password">Password:</label>
+      <input
+        class="input-field"
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="strongPassword123"
+      >
+    </div>
+  </form-error-display>
+</form>

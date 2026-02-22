@@ -1,1 +1,99 @@
-<p>register works!</p>
+<form class="form" [formGroup]="profileForm">
+
+  <div class="header">
+    <h2 class="header__title">Register</h2>
+  </div>
+
+  <form-error-display
+    [formElement]="profileForm.controls.email"
+    [handledErrors]="{
+        required: 'This field is required',
+      }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="email">E-mail: </label>
+      <input
+        class="input-field"
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="example@example.com"
+      >
+    </div>
+  </form-error-display>
+
+  <form-error-display
+    [formElement]="profileForm.controls.username"
+    [handledErrors]="{
+        required: 'This field is required',
+      }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="username">Username: </label>
+      <input
+        class="input-field"
+        id="username"
+        type="text"
+        formControlName="username"
+        placeholder="myUser"
+      >
+    </div>
+  </form-error-display>
+
+  <!-- Error display for password group -->
+  <form-error-display
+    [formElement]="profileForm.controls.passwords"
+    [handledErrors]="{
+        passwordsNotMatching: 'Passwords don\'t match'
+      }"
+  >
+    <div class="passwords" formGroupName="passwords">
+
+      <!-- Errors for individual password fields -->
+      <form-error-display
+        [formElement]="passwordGroupControls.password"
+        [handledErrors]="{
+        required: 'This field is required',
+      }"
+      >
+        <div class="input-label-group">
+          <label class="input-label" for="password">Password: </label>
+          <input
+            class="input-field"
+            id="password"
+            type="password"
+            formControlName="password"
+            (input)="checkMatchingPasswords(profileForm.controls.passwords)"
+            placeholder="strongPassword123!"
+          >
+        </div>
+      </form-error-display>
+
+      <form-error-display
+        [formElement]="passwordGroupControls.confirmPassword"
+        [handledErrors]="{
+          required: 'This field is required',
+        }"
+      >
+        <div class="input-label-group">
+          <label class="input-label" for="confirmPassword">Confirm password: </label>
+          <input
+            class="input-field"
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            (input)="checkMatchingPasswords(profileForm.controls.passwords)"
+            placeholder="strongPassword123!"
+          >
+        </div>
+      </form-error-display>
+
+    </div>
+  </form-error-display>
+  <!--  / Password group-->
+
+  <div class="actions">
+    <button (click)="submitForm()" [disabled]="!profileForm.valid" > Submit </button>
+    <button text="Back" class="btn btn--simple"> Back </button>
+  </div>
+</form>
