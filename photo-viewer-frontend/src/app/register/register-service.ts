@@ -1,8 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthResponse } from '../shared/model/auth-response';
 import { Observable } from 'rxjs';
-import { RegisterRequest } from './register-request';
-import { HttpClient } from '@angular/common/http';
+import { RegisterRequest } from '../shared/model/register-request';
 import { HttpService } from '../shared/service/http-service';
 
 @Injectable({

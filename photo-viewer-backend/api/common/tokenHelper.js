@@ -5,11 +5,6 @@ const TokenType = {
   ACCESS: 1
 }
 
-let dummyError = {
-  status: -1,
-  message: ''
-}
-
 exports.redirectOnAuth = function(redirectPath) {
   return function (req, res, next) {
     exports.checkUserAuth(req, res, function() {

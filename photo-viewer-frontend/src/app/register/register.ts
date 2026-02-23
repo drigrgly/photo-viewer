@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorDisplayInput } from '../shared/error-display-input/error-display-input.component';
 import { RegisterService } from './register-service';
-import { RegisterRequest } from './register-request';
+import { RegisterRequest } from '../shared/model/register-request';
 
 @Component({
   selector: 'register',

@@ -1,27 +1,34 @@
-const pool = require('../../db');
-const isEmailOrUsernameInUse = require('../account/service/isEmailOrUsernameInUse');
+const user = require('../user');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // Add a new user from the received user data
 module.exports = async (req, res, next) => {
-  const { email, username, password, pet} = req.body;
-  if (email == null || username == null || password == null)
+  const { username, password, confirmPassword } = req.body;
+  if (username == null || password == null || confirmPassword == null)
     return res.status(404).send({ message: "Missing fields" })
 
-  // Check if a user already has this email or name
-  if (await isEmailOrUsernameInUse(email, username))
+  // TODO: password requirements
+
+  if (password != confirmPassword)
+    return res.status(400).send({ message: "Passwords don't match"})
+
+  if (await user.isUsernameInUse(username))
     return res.status(400).send({ message: "Name or email already in use"})
 
-  try {
-    const result = await pool.query(
-      `SELECT account_add($1, $2, $3)`,
-      [username, email, password]
-    );
-    
-    return res.sendStatus(200);
+  let successfulAdd = false;
+   
+  let hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send('Server error');
+  payload = {
+    username: username,
+    password: hashedPassword,
   }
 
+  successfulAdd = await user.createUser(payload);
+
+  if (successfulAdd)
+    res.sendStatus(200);
+  else
+    return res.status(500).send('Server error');
 }
