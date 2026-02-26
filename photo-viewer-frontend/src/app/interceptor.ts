@@ -2,13 +2,13 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { inject, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { AuthService } from './shared/service/auth-service';
+import { HttpAuthService } from './shared/service/http-auth-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Interceptor implements HttpInterceptor {
-  authService = inject(AuthService);
+  authService = inject(HttpAuthService);
 
   constructor(
     private inject: Injector,

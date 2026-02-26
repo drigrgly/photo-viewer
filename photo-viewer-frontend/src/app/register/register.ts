@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ErrorDisplayInput } from '../shared/error-display-input/error-display-input.component';
 import { RegisterService } from './register-service';
 import { RegisterRequest } from '../shared/model/register-request';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'register',
   imports: [ReactiveFormsModule,
-    ErrorDisplayInput],
+    ErrorDisplayInput, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
@@ -18,9 +19,6 @@ export class Register {
   usernameMinLength = 3
 
   profileForm = this.formBuilder.group({
-    email: ['',
-      [Validators.required, Validators.email]
-    ],
     username: ['',
       [Validators.required, Validators.minLength(this.usernameMinLength)]
     ],
@@ -47,7 +45,6 @@ export class Register {
     }
 
     let regObject: RegisterRequest = {
-      email: this.profileForm.value.email!,
       username: this.profileForm.value.username!,
       password: this.profileForm.value.passwords?.password!,
       confirmPassword: this.profileForm.value.passwords?.confirmPassword!

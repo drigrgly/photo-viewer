@@ -1,25 +1,43 @@
-import { Injectable } from '@angular/core';
-import { RegisterRequest } from '../model/register-request';
-import { Observable } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
+import { LoginCredentials } from '../model/login-credentials';
+import { HttpAuthService } from './http-auth-service';
+import { UserModel } from '../model/user';
 import { AuthResponse } from '../model/auth-response';
-import { HttpService } from './http-service';
-import { LoginRequest } from '../model/login-request';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService extends HttpService {
-  
+export class AuthService {
+  httpAuthService = inject(HttpAuthService);
 
-  register(registerObject: RegisterRequest): Observable<AuthResponse>  {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, registerObject, this.httpOptions);
+  currentUserSig = signal<UserModel | undefined | null>(undefined); 
+
+  login(credentials: LoginCredentials ): Observable<AuthResponse> {
+    let loginSuccess$: Subject<AuthResponse> = new Subject();
+    this.httpAuthService.login(credentials).subscribe({
+      next: (loginResponse: UserModel | null) => {
+        this.currentUserSig.set(loginResponse)
+
+        loginSuccess$.next({
+          isOperationSuccessful: true,
+          message: "Logged in successfully"
+        });
+      },
+      error: (error) => {
+        console.error(error);
+
+        loginSuccess$.next({
+          isOperationSuccessful: false,
+          message: "Login failed"
+        });
+      }
+    });
+    return loginSuccess$;
   }
 
-  login(loginObject: LoginRequest): Observable<AuthResponse>  {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, loginObject, this.httpOptions);
-  }
+  logout() {
+    this.currentUserSig.set(null);
 
-  refreshToken(): Observable<AuthResponse> {
-    return this.http.get<AuthResponse>(`${this.apiUrl}/auth/refresh-token`, this.httpOptions);
   }
 }

@@ -17,14 +17,17 @@ exports.createUser = async (payload) => {
     let userRoleId;
     if (roleResult[0]?.id)
       userRoleId = roleResult[0]?.id;
-    else
+    else {
       return false;
+    }
 
     const data = {
       username: payload.username,
       password: payload.password,
       role_id: userRoleId
     };
+
+    console.log("Here will be the problem");
 
     const result = await pool.query(`INSERT INTO users SET ?`, data);
 

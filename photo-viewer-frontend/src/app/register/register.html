@@ -1,26 +1,8 @@
-<form class="form" [formGroup]="profileForm">
+<form class="form profile-form" [formGroup]="profileForm">
 
   <div class="header">
     <h2 class="header__title">Register</h2>
   </div>
-
-  <form-error-display
-    [formElement]="profileForm.controls.email"
-    [handledErrors]="{
-        required: 'This field is required',
-      }"
-  >
-    <div class="input-label-group">
-      <label class="input-label" for="email">E-mail: </label>
-      <input
-        class="input-field"
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="example@example.com"
-      >
-    </div>
-  </form-error-display>
 
   <form-error-display
     [formElement]="profileForm.controls.username"
@@ -93,7 +75,7 @@
   <!--  / Password group-->
 
   <div class="actions">
-    <button (click)="submitForm()" [disabled]="!profileForm.valid" > Submit </button>
-    <button text="Back" class="btn btn--simple"> Back </button>
+    <button (click)="submitForm()" class="btn" [disabled]="!profileForm.valid" > Submit </button>
+    <button routerLink="/" class="btn btn--simple"> Back </button>
   </div>
 </form>

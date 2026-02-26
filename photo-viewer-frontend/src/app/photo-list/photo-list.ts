@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { PhotoModel } from './photo-list-item/photo-model';
 import { PhotoListItem } from "./photo-list-item/photo-list-item";
+import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 @Component({
   selector: 'photo-list',
-  imports: [PhotoListItem],
+  imports: [PhotoListItem, NavigationBar],
   templateUrl: './photo-list.html',
   styleUrl: './photo-list.scss',
 })

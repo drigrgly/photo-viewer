@@ -24,9 +24,11 @@ html {
   padding:1em;
 
   border-radius: var(--panel-radius);
-  border: 3px solid var(--secondary-80);
-  background-color: var(--secondary-50);
-  box-shadow: 0.1rem 0.1rem 0.4rem var(--secondary-80);
+  padding: var(--panel-padding);
+
+  border:2px solid var(--primary-20);
+
+  background-color: var(--panel-100);
 
 
   .header__title {

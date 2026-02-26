@@ -2,6 +2,8 @@ CREATE DATABASE ${DB_NAME}
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_0900_ai_ci;
 
+use ${DB_NAME};
+
 -- Create roles table
 CREATE TABLE IF NOT EXISTS roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
