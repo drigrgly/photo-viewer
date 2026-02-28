@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PhotoList } from './photo-list/photo-list';
 import { Login } from './login/login';
 import { Register } from './register/register';
+import { PhotoUpload } from './photo-upload/photo-upload';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,10 @@ export const routes: Routes = [
   {
     path: "register",
     component: Register
+  },
+  {
+    path: "upload",
+    component: PhotoUpload
   },
   {
     path: "**",

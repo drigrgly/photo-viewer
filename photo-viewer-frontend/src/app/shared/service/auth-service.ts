@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginCredentials } from '../model/login-credentials';
 import { HttpAuthService } from './http-auth-service';
 import { UserModel } from '../model/user';
@@ -13,10 +13,13 @@ export class AuthService {
 
   currentUserSig = signal<UserModel | undefined | null>(undefined); 
 
+  // On page refresh, send an isAuthenticated request to the server with the token
+
   login(credentials: LoginCredentials ): Observable<AuthResponse> {
     let loginSuccess$: Subject<AuthResponse> = new Subject();
     this.httpAuthService.login(credentials).subscribe({
       next: (loginResponse: UserModel | null) => {
+        console.log(loginResponse);
         this.currentUserSig.set(loginResponse)
 
         loginSuccess$.next({
@@ -36,8 +39,9 @@ export class AuthService {
     return loginSuccess$;
   }
 
-  logout() {
+  async logout() {
     this.currentUserSig.set(null);
 
+    // Delete the cookies 
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/service/auth-service';
 
 @Component({
@@ -10,6 +10,7 @@ import { AuthService } from '../shared/service/auth-service';
 })
 export class NavigationBar {
   authService = inject(AuthService);
+  router = inject(Router);
 
   logout() {
     this.authService.logout();
