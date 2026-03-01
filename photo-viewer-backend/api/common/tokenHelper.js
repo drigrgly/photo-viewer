@@ -32,16 +32,13 @@ exports.requireAuth = function (req, res, next) {
     if (res.locals.isAuthenticated)
       return next();
     else {
-      res.status(401).send('Authentication token is invalid');
-      return next(error);
+      return res.status(401).send('Authentication token is invalid');
     }
   });
 }
 
 exports.requireRefreshToken = function(req, res, next) {
   let authObject = exports.checkTokenAuth(req, TokenType.REFRESH);
-
-  console.log(authObject);
 
   if(!authObject.isAuthenticated || authObject.user == null)
     res.status(401).send({message: 'Refresh token is invalid'});
@@ -89,7 +86,6 @@ exports.checkTokenAuth = function(req, tokenType) {
 checkToken = function (token, tokenType) {
   let authObject;
   const secret = tokenType == TokenType.ACCESS ? process.env.JWT_TOKEN_SECRET : process.env.JWT_REFRESH_TOKEN_SECRET;
-  console.log(secret);
   jwt.verify(token, secret, (err, user) => {
     if(err) authObject =  {isAuthenticated: false, user: null} 
     else authObject = {isAuthenticated: true, user: user}

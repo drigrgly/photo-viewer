@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'login',
-  imports: [ReactiveFormsModule, ErrorDisplayInput],
+  imports: [ReactiveFormsModule, ErrorDisplayInput, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

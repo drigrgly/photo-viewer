@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  flex-direction: row;
+
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  gap: 1rem;
+}
+
+.action-buttons, .profile-buttons {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  gap: 1rem;
+}

@@ -26,7 +26,7 @@ module.exports = [
       res.cookie('accessToken', token, cookieSettings);
       res.cookie('refreshToken', refreshToken, cookieSettings);
 
-      return res.send({ user: userObject });
+      return res.send(userObject);
     }
 ]
 

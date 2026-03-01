@@ -12,6 +12,7 @@ const postRegister = require('./api/auth/postRegister');
 const getValid = require('./api/auth/getValid');
 const getLogout = require('./api/auth/getLogout');
 const refreshToken = require('./api/auth/refreshToken');
+const getIsAuthenticated = require('./api/auth/getIsAuthenticated');
 
 module.exports = router;
 
@@ -25,6 +26,7 @@ router.post('/auth/register', postRegister);
 
 router.post('/auth/login', postLogin);
 router.get('/auth/refresh-token', refreshToken);
+router.get('/auth/is-authenticated', tokenFunctions.requireAuth, getIsAuthenticated);
 
 router.get('/auth/logout',
   tokenFunctions.requireAuth,

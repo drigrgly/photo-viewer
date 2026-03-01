@@ -1,7 +1,7 @@
 <navigation-bar />
 
-@for (photo of mockList; track $index) {
-
-  <photo-list-item [photoModel]="photo" />
-
-}
+<div class="photo-list">
+  @for (photo of mockList; track $index) {
+    <photo-list-item [photoModel]="photo" />
+  }
+</div>

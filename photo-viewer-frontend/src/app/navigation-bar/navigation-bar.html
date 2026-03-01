@@ -1,10 +1,23 @@
+<div class="action-buttons">
+  @if (!isUploadPage && authService.currentUserSig() != null) {
+    <button routerLink="/upload" class="btn">Upload photo</button>
+  }
+  @if (isUploadPage || isPhotoViewPage) {
+    <button routerLink="/" class="btn btn--simple">Back</button>
+  }
+</div>
+
 @if (authService.currentUserSig() != null) {
-  <button routerLink="/upload" class="btn">Upload photo</button>
-  <button routerLink="/" (click)="logout()" class="btn btn--secondary btn--simple">Log out</button>
+  <div class="profile-buttons">
+    <p>{{authService.currentUserSig()?.username}}</p>
+    <button routerLink="/" (click)="logout()" class="btn btn--secondary btn--simple">Log out</button>
+  </div>
 }
 @else {
-  <button routerLink="/register" class="btn">Register</button>
-  <button routerLink="/login" class="btn btn--secondary btn--simple">Sign in</button>
+  <div class="profile-buttons">
+    <button routerLink="/register" class="btn">Register</button>
+    <button routerLink="/login" class="btn btn--secondary btn--simple">Sign in</button>
+  </div>
 }
 
   
