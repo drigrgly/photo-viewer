@@ -1,6 +1,6 @@
 <div class="action-buttons">
   @if (!isUploadPage && authService.currentUserSig() != null) {
-    <button routerLink="/upload" class="btn">Upload photo</button>
+    <button routerLink="/upload" class="btn"><i class="material-icons-outlined">add</i>Upload photo</button>
   }
   @if (isUploadPage || isPhotoViewPage) {
     <button routerLink="/" class="btn btn--simple">Back</button>

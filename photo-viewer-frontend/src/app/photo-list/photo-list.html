@@ -1,7 +1,11 @@
 <navigation-bar />
 
-<div class="photo-list">
-  @for (photo of mockList; track $index) {
-    <photo-list-item [photoModel]="photo" />
-  }
-</div>
+@if (photoList.length != 0) {
+  <div class="photo-list">
+    @for (photo of photoList; track $index) {
+      <photo-list-item [photoModel]="photo" />
+    }
+  </div>
+} @else {
+  <h1>No photos are uploaded yet</h1>
+}

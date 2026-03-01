@@ -13,6 +13,9 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 
+// Serve the uploaded picture
+app.use("/uploads", express.static("uploads"))
+
 const routes = require('./routes');
 
 app.use(routes);

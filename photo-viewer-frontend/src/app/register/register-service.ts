@@ -10,6 +10,6 @@ import { HttpService } from '../shared/service/http-service';
 export class RegisterService extends HttpService {
   
   submitForm(registerObject: RegisterRequest): Observable<AuthResponse>  {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, registerObject, this.httpOptions);
+    return this.http.post<AuthResponse>(`${this.authUrl}/register`, registerObject, this.httpOptions);
   }
 }

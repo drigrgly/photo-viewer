@@ -7,3 +7,4 @@ src/environments/environment.ts
 .env
 node_modules
 
+uploads

@@ -1,6 +1,8 @@
 export interface PhotoModel {
-  id?: number;
-  ownerId: number;
+  id: number;
   name: string;
-  date: Date;
+  username: string;
+  userId: number;
+  path: string;
+  uploadDate: Date
 }

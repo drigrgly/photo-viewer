@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { PhotoModel } from './photo-list-item/photo-model';
+import { Component, inject, OnInit } from '@angular/core';
 import { PhotoListItem } from "./photo-list-item/photo-list-item";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { PhotoService } from '../photo-upload/photo-service';
+import { PhotoModel } from './photo-list-item/photo-model';
 
 @Component({
   selector: 'photo-list',
@@ -9,45 +10,24 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
   templateUrl: './photo-list.html',
   styleUrl: './photo-list.scss',
 })
-export class PhotoList {
+export class PhotoList implements OnInit{
+  photoService = inject(PhotoService);
+  photoList: PhotoModel[] = [];
 
-  mockList: PhotoModel[] = [
-    {
-      id: 0,
-      name: "A beautiful photo",
-      ownerId: 0,
-      date: new Date()
-    },
-    {
-      id: 0,
-      name: "A beautiful photo",
-      ownerId: 0,
-      date: new Date()
-    },
-    {
-      id: 0,
-      name: "A beautiful photo",
-      ownerId: 0,
-      date: new Date()
-    },
-    {
-      id: 1,
-      name: "A picture of an owl",
-      ownerId: 0,
-      date: new Date()
-    },
-    {
-      id: 2,
-      name: "A cat",
-      ownerId: 0,
-      date: new Date()
-    },
-    {
-      id: 2,
-      name: "A photo with a really really really real",
-      ownerId: 0,
-      date: new Date()
-    },
-  ]
+  ngOnInit(): void {
+    this.photoService.getAllPhotos().subscribe({
+      next: (result: PhotoModel[]) => {
+        console.log(result);
+        this.photoList = result.map((pm: PhotoModel) => ({
+          ...pm, uploadDate: new Date(pm.uploadDate)
+        }));
+      },
+      error: () => {
+        console.warn("Could not get photos");
+      }
+    });
+    
+  }
+
 
 }

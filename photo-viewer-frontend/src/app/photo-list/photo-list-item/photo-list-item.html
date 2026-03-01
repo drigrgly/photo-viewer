@@ -1,10 +1,19 @@
 <div class="info">
-  <h3 class="date">{{photoModel().date.getFullYear()}}.{{(photoModel().date.getMonth() + 1).toString().padStart(2, "0")}}.{{photoModel().date.getDate().toString().padStart(2, "0")}}</h3>
+  <h3 class="date">
+    {{photoModel().uploadDate.getFullYear()}}.
+    {{(photoModel().uploadDate.getMonth() + 1).toString().padStart(2, "0")}}.
+    {{photoModel().uploadDate.getDate().toString().padStart(2, "0")}}.
+    -
+    {{photoModel().uploadDate.getHours()}}:{{photoModel().uploadDate.getMinutes()}}
+  </h3>
   <h1 class="name">{{photoModel().name}}</h1>
   <span class="separator"></span>
-  <h2 class="owner">{{photoModel().ownerId}}</h2>
+  <h2 class="owner">{{photoModel().username}}</h2>
 </div>
 
 <div class="actions">
+  @if (authService.currentUserSig() != null && photoModel().userId == authService.currentUserSig()?.id) {
+    <button class="btn btn--danger" (click)="deletePhoto()" ><i class="material-icons-outlined">delete</i>Delete</button>
+  }
   <button class="btn" [routerLink]="'/photo/' + photoModel().id"><i class="material-icons-outlined">visibility</i>View</button>
 </div>

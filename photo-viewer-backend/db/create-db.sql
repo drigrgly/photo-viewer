@@ -27,10 +27,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS photos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
-    hash VARCHAR(32) NOT NULL UNIQUE,
-    location VARCHAR(255),
-    upload_date DATETIME,
-    user_id INT,
+    path VARCHAR(255) NOT NULL,
+    upload_date DATETIME DEFAULT NOW(),
+    user_id INT NOT NULL,
     CONSTRAINT fk_photos_user
         FOREIGN KEY (user_id)
         REFERENCES users(id)
