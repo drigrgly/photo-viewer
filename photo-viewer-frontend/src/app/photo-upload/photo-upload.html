@@ -1,3 +1,53 @@
-<navigation-bar>
+<navigation-bar />
 
-<form class="form" ></form>
+<form class="form photo-form" [formGroup]="photoForm" >
+  <h1 class="form-title">Upload photo</h1>
+
+  <!-- Photo name -->
+  <form-error-display
+    [formElement]="this.photoForm.controls.name"
+    [handledErrors]="{
+      required: 'This field is required',
+      maxlength: 'The name cannot be longer than 40 characters'
+    }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="name">Name: </label>
+      <input
+        class="input-field"
+        id="name"
+        type="name"
+        formControlName="name"
+        name="name"
+        placeholder="Picture of my dogs"
+      >
+    </div>
+  </form-error-display>
+
+  <!-- Photo -->
+  <form-error-display
+    [formElement]="this.photoForm.controls.photo"
+    [handledErrors]="{
+      required: 'This field is required',
+    }"
+  >
+    <div class="input-label-group">
+      <label class="input-label" for="photo">Photo: </label>
+      <input
+        class="input-field"
+        id="photo"
+        type="file"
+        formControlName="photo"
+        name="photo"
+        (change)="onPhotoSelected($event)"
+      >
+    </div>
+  </form-error-display>
+
+  <input formControlName="userId" type="hidden" name="userId" id="userId">
+
+  <div class="actions">
+    <button (click)="submitForm()" class="btn" [disabled]="!photoForm.valid" > Upload </button>
+    <button routerLink="/" class="btn btn--simple"> Back </button>
+  </div>
+</form>

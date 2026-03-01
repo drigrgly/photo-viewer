@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS photos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
+    hash VARCHAR(32) NOT NULL UNIQUE,
     location VARCHAR(255),
     upload_date DATETIME,
     user_id INT,

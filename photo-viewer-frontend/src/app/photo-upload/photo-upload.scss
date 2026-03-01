@@ -5,3 +5,25 @@
   gap: 1rem;
   width: 100%;
 }
+
+.photo-form {
+  width: fit-content;
+  margin: auto;
+
+  padding:2rem 4rem;
+
+  gap: 2rem;
+
+  .passwords {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .actions {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+}

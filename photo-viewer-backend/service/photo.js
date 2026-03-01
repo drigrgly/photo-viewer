@@ -1,6 +1,7 @@
 const pool = require('../db');
+const crypto = require('crypto');
 
-exports.uploadPhoto = async () => {
+exports.uploadPhoto = async (payload) => {
 
 }
 

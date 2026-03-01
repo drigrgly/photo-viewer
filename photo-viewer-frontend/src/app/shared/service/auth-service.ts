@@ -13,14 +13,13 @@ export class AuthService {
 
   currentUserSig = signal<UserModel | undefined | null>(undefined); 
 
-  // On page refresh, send an isAuthenticated request to the server with the token
-
   login(credentials: LoginCredentials ): Observable<AuthResponse> {
     let loginSuccess$: Subject<AuthResponse> = new Subject();
     this.httpAuthService.login(credentials).subscribe({
       next: (loginResponse: UserModel | null) => {
-        console.log(loginResponse);
         this.currentUserSig.set(loginResponse)
+
+        localStorage.setItem("userLoggedIn", "true");
 
         loginSuccess$.next({
           isOperationSuccessful: true,
@@ -39,9 +38,42 @@ export class AuthService {
     return loginSuccess$;
   }
 
-  async logout() {
-    this.currentUserSig.set(null);
 
-    // Delete the cookies 
+  // Used in app.config.ts init provider
+  // This way we check if the user is authenticated, before rendering anything
+  checkAuth(): Observable<any> {
+    let authSuccess$: Subject<String> = new Subject();
+
+    if (localStorage.getItem("userLoggedIn") == null) {
+       authSuccess$.complete()
+       return authSuccess$;
+    }
+
+    this.httpAuthService.isAuthenticated().subscribe({
+      next: (response: UserModel | null) => {
+        this.currentUserSig.set(response);
+        authSuccess$.complete()
+      },
+      error: (error) => {
+        console.warn("Authentication expired");
+        authSuccess$.complete()
+      }
+    })
+    return authSuccess$
+  }
+
+  async logout() {
+    this.httpAuthService.logout().subscribe({
+      next: () => {
+        this.currentUserSig.set(null);
+        localStorage.removeItem("userLoggedIn");
+        console.log("Logout was successful");
+      },
+      error: (error) => {
+        console.warn("Could not log out");
+        console.warn(error);
+
+      }
+    })
   }
 }

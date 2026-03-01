@@ -13,6 +13,7 @@ const getValid = require('./api/auth/getValid');
 const getLogout = require('./api/auth/getLogout');
 const refreshToken = require('./api/auth/refreshToken');
 const getIsAuthenticated = require('./api/auth/getIsAuthenticated');
+const postPhoto = require('./api/photo/postPhoto');
 
 module.exports = router;
 
@@ -32,3 +33,5 @@ router.get('/auth/logout',
   tokenFunctions.requireAuth,
   getLogout
 );
+
+router.post('/api/photo', tokenFunctions.requireAuth, postPhoto)

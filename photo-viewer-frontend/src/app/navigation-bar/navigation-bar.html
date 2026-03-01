@@ -9,7 +9,7 @@
 
 @if (authService.currentUserSig() != null) {
   <div class="profile-buttons">
-    <p>{{authService.currentUserSig()?.username}}</p>
+    <p>Logged in as: {{authService.currentUserSig()?.username}}</p>
     <button routerLink="/" (click)="logout()" class="btn btn--secondary btn--simple">Log out</button>
   </div>
 }

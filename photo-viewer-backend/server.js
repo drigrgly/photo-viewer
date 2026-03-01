@@ -9,6 +9,7 @@ const port = 3000;
 require('dotenv').config({path:'./.ENV'})
 
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 

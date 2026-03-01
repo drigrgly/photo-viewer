@@ -12,14 +12,22 @@ import { UserModel } from '../model/user';
 export class HttpAuthService extends HttpService {
 
   register(registerObject: RegisterRequest): Observable<AuthResponse>  {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, registerObject, this.httpOptions);
+    return this.http.post<AuthResponse>(`${this.authUrl}/register`, registerObject, this.httpOptions);
   }
 
   login(loginObject: LoginCredentials): Observable<UserModel | null>  {
-    return this.http.post<UserModel | null>(`${this.apiUrl}/auth/login`, loginObject, this.httpOptions);
+    return this.http.post<UserModel | null>(`${this.authUrl}/login`, loginObject, this.httpOptions);
+  }
+
+  logout(): Observable<AuthResponse> {
+    return this.http.get<AuthResponse>(`${this.authUrl}/logout`, this.httpOptions);
+  }
+
+  isAuthenticated(): Observable<UserModel | null> {
+    return this.http.get<UserModel | null>(`${this.authUrl}/is-authenticated`, this.httpOptions);
   }
 
   refreshToken(): Observable<AuthResponse> {
-    return this.http.get<AuthResponse>(`${this.apiUrl}/auth/refresh-token`, this.httpOptions);
+    return this.http.get<AuthResponse>(`${this.authUrl}/refresh-token`, this.httpOptions);
   }
 }
