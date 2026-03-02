@@ -150,6 +150,20 @@ spec:
   ports:
     - port: 3000
       targetPort: 3000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uploads-pvc
+  namespace: photo-viewer
+  labels:
+    app: photo-viewer
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 --- 
 apiVersion: apps/v1
 kind: Deployment
@@ -167,8 +181,12 @@ spec:
       labels:
         app: photo-viewer
     spec:
+      volumes:
+      - name: uploads-pvc
+        persistentVolumeClaim:
+          claimName: uploads-pvc
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/photo-viewer/photo-viewer:latest
+      - image: localhost/photo-viewer
         imagePullPolicy: IfNotPresent
         name: photo-viewer
         env:
@@ -179,6 +197,9 @@ spec:
         envFrom:
           - secretRef:
               name: env-secret  
+        volumeMounts:
+        - name: uploads-pvc
+          mountPath: /app/uploads
         ports:
         - containerPort: 3000
         resources:

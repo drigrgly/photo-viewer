@@ -10,6 +10,8 @@ CREATE TABLE IF NOT EXISTS roles (
     name VARCHAR(255) NOT NULL
 );
 
+INSERT INTO roles (name) VALUES ("ADMIN"), ("USER");
+
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
