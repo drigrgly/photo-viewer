@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: photo-viewer-ns
+  name: photo-viewer
   labels:
-    name: photo-viewer-ns
+    name: photo-viewer
 --- # Mysql
 apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
 spec:
   ports:
   - name: mysql-port
@@ -22,7 +22,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
   labels:
     app: mysql
 spec:
@@ -36,7 +36,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-init-config
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
 data:
   init.sql: |
     -- Create roles table
@@ -45,7 +45,7 @@ data:
         name VARCHAR(255) NOT NULL
     );
 
-    INSERT INTO roles (name) VALUES ("ADMIN"), ("USER")
+    INSERT INTO roles (name) VALUES ("ADMIN"), ("USER");
 
     -- Create users table
     CREATE TABLE IF NOT EXISTS users (
@@ -79,7 +79,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
 spec:
   selector:
     matchLabels:
@@ -142,7 +142,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: photo-viewer-service
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
 spec:
   selector:
     app: photo-viewer
@@ -155,7 +155,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: photo-viewer
-  namespace: photo-viewer-ns
+  namespace: photo-viewer
 spec:
   selector:
     matchLabels:
@@ -168,7 +168,7 @@ spec:
         app: photo-viewer
     spec:
       containers:
-      - image: localhost/photo-viewer
+      - image: image-registry.openshift-image-registry.svc:5000/photo-viewer/photo-viewer:latest
         imagePullPolicy: IfNotPresent
         name: photo-viewer
         env:
