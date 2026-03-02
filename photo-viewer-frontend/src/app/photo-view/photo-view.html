@@ -1,7 +1,7 @@
 <navigation-bar />
 
 @if (photoExists) {
-  <img class="panel photo" [src]="httpService.baseUrl +'/'+ photo?.path" alt="">
+  <img class="panel photo" [src]="photo?.path" alt="">
 }
 @else {
   <h1>{{errorText}}</h1>

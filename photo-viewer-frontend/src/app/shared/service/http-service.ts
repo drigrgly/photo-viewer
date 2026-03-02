@@ -6,8 +6,10 @@ import {inject, Injectable} from '@angular/core';
 })
 export class HttpService {
   baseUrl = "http://localhost:3000"
-  apiUrl = `${this.baseUrl}/api`
-  authUrl = `${this.baseUrl}/auth`
+  //apiUrl = `${this.baseUrl}/api`
+  //authUrl = `${this.baseUrl}/auth`
+  apiUrl = `/api`
+  authUrl = `/auth`
   http = inject(HttpClient)
   httpOptions = {
     headers: { 'Content-Type': 'application/json' },

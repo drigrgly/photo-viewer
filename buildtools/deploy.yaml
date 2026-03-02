@@ -1,0 +1,190 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: photo-viewer-ns
+  labels:
+    name: photo-viewer-ns
+--- # Mysql
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: photo-viewer-ns
+spec:
+  ports:
+  - name: mysql-port
+    port: 3306
+  selector:
+    app: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: photo-viewer-ns
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-config
+  namespace: photo-viewer-ns
+data:
+  init.sql: |
+    -- Create roles table
+    CREATE TABLE IF NOT EXISTS roles (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL
+    );
+
+    INSERT INTO roles (name) VALUES ("ADMIN"), ("USER")
+
+    -- Create users table
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        role_id INT,
+        CONSTRAINT fk_users_role
+            FOREIGN KEY (role_id)
+            REFERENCES roles(id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+    );
+
+    -- Create photos table
+    CREATE TABLE IF NOT EXISTS photos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(40) NOT NULL,
+        path VARCHAR(255) NOT NULL,
+        upload_date DATETIME DEFAULT NOW(),
+        user_id INT NOT NULL,
+        CONSTRAINT fk_photos_user
+            FOREIGN KEY (user_id)
+            REFERENCES users(id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+    );
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: photo-viewer-ns
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:9
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DB_ROOT_PW
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DB_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DB_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: DB_NAME
+        ports:
+        - containerPort: 3306
+          name: mysql
+        resources:
+          requests:
+            memory: "256Mi"   # Minimum memory guaranteed
+            cpu: "250m"       # Minimum CPU guaranteed (0.25 cores)
+          limits:
+            memory: "512Mi"   # Max memory container can use
+            cpu: "500m"       # Max CPU container can use (0.5 cores)
+        volumeMounts:
+        - name: mysql-init
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: mysql-init
+        configMap:
+          name: mysql-init-config
+--- # Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: photo-viewer-service
+  namespace: photo-viewer-ns
+spec:
+  selector:
+    app: photo-viewer
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photo-viewer
+  namespace: photo-viewer-ns
+spec:
+  selector:
+    matchLabels:
+      app: photo-viewer
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: photo-viewer
+    spec:
+      containers:
+      - image: localhost/photo-viewer
+        imagePullPolicy: IfNotPresent
+        name: photo-viewer
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PORT
+          value: mysql-port
+        envFrom:
+          - secretRef:
+              name: env-secret  
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "256Mi"   # Minimum memory guaranteed
+            cpu: "250m"       # Minimum CPU guaranteed (0.25 cores)
+          limits:
+            memory: "512Mi"   # Max memory container can use
+            cpu: "500m"       # Max CPU container can use (0.5 cores)
