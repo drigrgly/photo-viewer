@@ -1,0 +1,33 @@
+# Node modules for both server and Angular
+node_modules
+**/node_modules
+
+# Angular build output
+dist
+tmp
+out-tsc
+
+# Logs
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+*.log
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Git
+.git
+.gitignore
+
+# Docker-related files (optional)
+Dockerfile
+docker-compose.yml
+
+# Environment files 
+**/*.env
+
+# uploaded photos
+uploads
