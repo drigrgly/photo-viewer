@@ -27,7 +27,7 @@ metadata:
     app: mysql
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -160,7 +160,7 @@ metadata:
     app: photo-viewer
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
