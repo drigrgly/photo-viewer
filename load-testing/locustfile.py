@@ -18,9 +18,9 @@ class PhotoViewerUser(HttpUser):
 
         # Login
         response = self.client.post(
-            "/api/auth/login",
+            "/auth/login",
             json={"username": username, "password": password},
-            name="/api/auth/login"
+            name="/auth/login"
         )
         
         # Store credentials for potential re-login
