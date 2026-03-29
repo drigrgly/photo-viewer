@@ -74,7 +74,7 @@ spec:
         role: worker
     spec:
       containers:
-      - image: drigrgly/locust:latest
+      - image: drigrgly/load-testing:latest
         name: locust-worker
         env:
         - name: LOAD_TEST_USER
