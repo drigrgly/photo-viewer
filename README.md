@@ -6,9 +6,16 @@ A simple application made for a university course.
 
 **Table of contents**
 
+
 1. [Architecture](#architecture) 
 2. [Deployments](#deployments)
+3. Autoscaling and load testing
 3. [Future developments](#future-developments)
+
+# Changelog
+## 2026. 11. 18. 
+- Added autoscaling to web app
+- Added load testing configuration
 
 # Architecture
 

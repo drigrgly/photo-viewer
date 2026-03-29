@@ -171,6 +171,7 @@ metadata:
   name: photo-viewer
   namespace: photo-viewer
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: photo-viewer
@@ -186,7 +187,7 @@ spec:
         persistentVolumeClaim:
           claimName: uploads-pvc
       containers:
-      - image: localhost/photo-viewer
+      - image: drigrgly/photo-viewer
         imagePullPolicy: IfNotPresent
         name: photo-viewer
         env:
@@ -209,3 +210,23 @@ spec:
           limits:
             memory: "512Mi"   # Max memory container can use
             cpu: "500m"       # Max CPU container can use (0.5 cores)
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: photo-viewer-hpa
+  namespace: photo-viewer
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: photo-viewer
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
