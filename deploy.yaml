@@ -205,11 +205,11 @@ spec:
         - containerPort: 3000
         resources:
           requests:
-            memory: "256Mi"   # Minimum memory guaranteed
-            cpu: "250m"       # Minimum CPU guaranteed (0.25 cores)
+            memory: "128Mi"
+            cpu: "100m"
           limits:
-            memory: "512Mi"   # Max memory container can use
-            cpu: "500m"       # Max CPU container can use (0.5 cores)
+            memory: "256Mi"
+            cpu: "200m"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler

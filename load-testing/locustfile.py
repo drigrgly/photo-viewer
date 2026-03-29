@@ -1,5 +1,4 @@
 from locust import HttpUser, task, between
-import os
 import random
 
 class PhotoViewerUser(HttpUser):
@@ -8,14 +7,22 @@ class PhotoViewerUser(HttpUser):
     wait_time = between(1, 3)  # Wait 1-3 seconds between tasks
     
     def on_start(self):
-        """Login when the user starts"""
-        self.login()
+        """Register and login when the user starts"""
+        self.register_and_login()
     
-    def login(self):
-        """Login with existing credentials"""
-        username = os.environ.get("LOAD_TEST_USER", "testuser")
-        password = os.environ.get("LOAD_TEST_PASSWORD", "testpassword")
-
+    def register_and_login(self):
+        """Register a new user with unique credentials and login"""
+        import random
+        username = f"loadtest_{random.randint(100000, 999999)}"
+        password = "TestPassword123!"
+        
+        # Register
+        self.client.post(
+            "/auth/register",
+            json={"username": username, "password": password},
+            name="/auth/register"
+        )
+        
         # Login
         response = self.client.post(
             "/auth/login",
@@ -31,4 +38,9 @@ class PhotoViewerUser(HttpUser):
     def get_all_photos(self):
         """Fetch all photos (most common operation)"""
         self.client.get("/api/photo", name="/api/photo [GET all]")
+
+    @task(1)
+    def get_specific_photo(self):
+        """Fetch a specific photo by ID"""
+        self.client.get("/api/photo/2", name="/api/photo/2 [GET]")
 
