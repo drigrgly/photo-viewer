@@ -1,4 +1,5 @@
 from locust import HttpUser, task, between
+import os
 import random
 
 class PhotoViewerUser(HttpUser):
@@ -12,8 +13,8 @@ class PhotoViewerUser(HttpUser):
     
     def login(self):
         """Login with existing credentials"""
-        username = self.get_secret("LOAD_TEST_USER")
-        password = self.get_secret("LOAD_TEST_PASSWORD")
+        username = os.environ.get("LOAD_TEST_USER", "testuser")
+        password = os.environ.get("LOAD_TEST_PASSWORD", "testpassword")
 
         # Login
         response = self.client.post(
