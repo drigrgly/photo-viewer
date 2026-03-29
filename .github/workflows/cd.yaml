@@ -11,6 +11,7 @@ env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_KEY: ${{ secrets.DOCKERHUB_KEY }}
   IMAGE_NAME: photo-viewer
+  LOAD_TEST_IMAGE_NAME: load-testing
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -25,7 +26,14 @@ jobs:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_KEY }}
 
-      - name: Build Docker image
+      - name: Build App Docker image
         run: docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest .
-      - name: Push Docker image
+
+      - name: Push App Docker image
         run: docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Build Load Tester Docker image
+        run: cd load-testing && docker build -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.LOAD_TEST_IMAGE_NAME }}:latest .
+
+      - name: Push Load Tester Docker image
+        run: docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.LOAD_TEST_IMAGE_NAME }}:latest

@@ -9,7 +9,7 @@ A simple application made for a university course.
 
 1. [Architecture](#architecture) 
 2. [Deployments](#deployments)
-3. Autoscaling and load testing
+3. [Autoscaling and load testing](#autoscaling-and-load-testing)
 3. [Future developments](#future-developments)
 
 # Changelog
@@ -87,14 +87,9 @@ Frontend |------------[logout request]----------->| Backend
 
 ## CICD configuration
 
-I'm using OpenShift for deploying the application.
+I'm using OpenShift for deploying the application together with GitHub Actions.
 
-A BuildConfig resource is set, working together with with GitHub webhooks to "monitor" the repository for changes.
-
-When it detects that the repository has been updated, it creates a container image from the **[Dockerfile](Dockerfile)**
-
-This newly created image is then used in the deployment of the pods, this way the newest version will be available automatically.
-
+The github actions build an image using the Dockerfile present in the repository. Then the newly created container image is pushed to DockerHub, from there the deployment on OpenShift can pull the image and use it.
 ## Deploying the application yourself
 There are multiple ways you can deploy this application yourself
 
@@ -154,6 +149,14 @@ To see the external IP where you can reach your application, use:
 kubectl get svc -n photo-viewer
 ```
 
+# Autoscaling and load testing
+
+## Autoscale
+To achieve autoscaling, I added a HorizontalPodAutoscaler to the end of the [`deploy.yaml`](deploy.yaml) file.
+This is set up, so that the average utilization remains around the set percent. The autoscaler uses this metric to add and remove pods as necessary up to 5 replicas.
+
+## Load testing
+In order not to clutter the main README, the method for load testing and the results can be found in [`load-testing.md`](load-testing.md)
 # Future developments
 - Adding more feedback towards the user to enhance user experience
 - Separating the authentication server and the backend server for more scalability
