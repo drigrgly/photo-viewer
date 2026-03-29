@@ -27,8 +27,6 @@ exports.createUser = async (payload) => {
       role_id: userRoleId
     };
 
-    console.log("Here will be the problem");
-
     const result = await pool.query(`INSERT INTO users SET ?`, data);
 
     return result.affectedRows != 0;
