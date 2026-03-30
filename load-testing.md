@@ -52,3 +52,24 @@ After the load is no longer present, the deployment automatically scales back do
 
 We can see the pod terminating here
 ![termination](images/termination.png)
+
+## Findings with 1000 users
+We can see, that the pod count increases to 3
+![pod count](images/locust-1000.png)
+
+For some reason the register and login endpoints fail, this results in many fails in the first part of the load test 
+
+![locust chart](images/locust-chart.png)
+
+
+On the metrics tab, we can see the pods increasing as the load gets bigger:
+![pod scaling](images/pod-increase.png)
+
+
+Type | Name | # Requests | # Fails | Median (ms) | 95%ile (ms) | 99%ile (ms) | Average (ms) | Min (ms) | Max (ms) | Average size (bytes) | Current RPS | Current Failures/s
+-----|------|------------|---------|-------------|-------------|-------------|--------------|----------|----------|----------------------|-------------|-------------------
+POST | /auth/login | 567 | 567 | 110 | 67000 | 108000 | 9043.19 | 3 | 148080 | 12.69 | 0.8 | 0.8
+GET | /api/photo/2 [GET] | 2048 | 33 | 130 | 1100 | 31000 | 889.15 | 2 | 81639 | 157.93 | 0.2 | 0.2
+GET | /api/photo [GET all] | 2738 | 11 | 190 | 800 | 1100 | 266.73 | 2 | 1291 | 2497.92 | 0.8 | 0
+POST | /auth/register | 7291 | 7291 | 890 | 1800 | 2300 | 852.72 | 4 | 2912 | 27.32 | 0 | 0
+ | Aggregated | 12644 | 7902 | 520 | 1700 | 10000 | 1099.02 | 2 | 148080 | 582.82 | 1.8 | 
