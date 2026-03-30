@@ -3,7 +3,7 @@ FROM python:3.11-alpine
 WORKDIR /app
 
 # Install Locust
-RUN pip install --no-cache-dir locust==2.15.1
+RUN pip install --no-cache-dir locust
 
 # Copy the locustfile
 COPY locustfile.py .
