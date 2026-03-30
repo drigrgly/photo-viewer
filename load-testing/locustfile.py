@@ -18,9 +18,9 @@ class PhotoViewerUser(HttpUser):
         
         # Register
         self.client.post(
-            "/auth/register",
+            "/api/auth/register",
             json={"username": username, "password": password},
-            name="/auth/register"
+            name="/api/auth/register"
         )
         
         # Login
