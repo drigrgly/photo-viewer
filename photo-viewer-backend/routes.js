@@ -47,19 +47,19 @@ const upload = multer({storage: storage});
 
 module.exports = router;
 
-// auth
-router.get('/auth/valid',
-  tokenFunctions.checkUserAuth,
+// api/auth
+router.get('/api/auth/valid',
+  tokenFunctions.checkUserapi/auth,
   getValid,
 );
 
-router.post('/auth/register', postRegister);
+router.post('/api/auth/register', postRegister);
 
-router.post('/auth/login', postLogin);
-router.get('/auth/refresh-token', refreshToken);
-router.get('/auth/is-authenticated', tokenFunctions.requireAuth, getIsAuthenticated);
+router.post('/api/auth/login', postLogin);
+router.get('/api/auth/refresh-token', refreshToken);
+router.get('/api/auth/is-authenticated', tokenFunctions.requireAuth, getIsAuthenticated);
 
-router.get('/auth/logout',
+router.get('/api/auth/logout',
   tokenFunctions.requireAuth,
   getLogout
 );

@@ -9,7 +9,7 @@ export class HttpService {
   //apiUrl = `${this.baseUrl}/api`
   //authUrl = `${this.baseUrl}/auth`
   apiUrl = `/api`
-  authUrl = `/auth`
+  authUrl = `${this.apiUrl}/auth`
   http = inject(HttpClient)
   httpOptions = {
     headers: { 'Content-Type': 'application/json' },
